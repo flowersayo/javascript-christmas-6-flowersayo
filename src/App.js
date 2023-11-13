@@ -5,7 +5,9 @@ class App {
     this.eventPreviewController = new EventPreviewController();
   }
 
-  async run() {}
+  async run() {
+    await this.eventPreviewController.handleTakeOrder();
+  }
 }
 
 export default App;
