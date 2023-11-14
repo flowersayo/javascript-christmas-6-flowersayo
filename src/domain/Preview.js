@@ -1,23 +1,24 @@
-import AppError from '../AppError.js';
-import { ERROR, EVENT } from '../Constant.js';
+import Validator from '../Validator.js';
 
 class Preview {
   #date;
 
-  constructor(date) {
-    this.#validate(date);
+  /**
+   * @typedef {Object} OrderItem
+   * @property {string} name - 메뉴의 이름
+   * @property {number} count - 주문 수량
+   */
+
+  /**
+   * @type {Array<OrderItem>}
+   */
+  #orderList;
+
+  constructor(date, orderList) {
+    Validator.validateDate(date);
+
     this.#date = date;
-  }
-
-  #validate(date) {
-    const REGEX_NUMERIC = /^\d+$/;
-    if (!REGEX_NUMERIC.test(date)) {
-      throw new AppError(ERROR.DATE_NOT_A_NUMBER);
-    }
-
-    if (date < EVENT.DAY_MIN || date > EVENT.DAY_MAX) {
-      throw new AppError(ERROR.DATE_NOT_IN_RANGE);
-    }
+    this.#orderList = orderList;
   }
 }
 

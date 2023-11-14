@@ -3,21 +3,21 @@ import { MESSAGE } from '../Constant.js';
 
 const InputView = {
   async readDate() {
-    const input = await Console.readLineAsync(MESSAGE.GET_DATE);
+    const input = await Console.readLineAsync(`${MESSAGE.GET_DATE}\n`);
 
     return Number(input);
   },
 
-  async readMenus() {
-    const input = await Console.readLineAsync(MESSAGE.GET_MENU_TO_ORDER);
+  async readOrder() {
+    const input = await Console.readLineAsync(`${MESSAGE.GET_MENU_TO_ORDER}\n`);
 
-    const menus = input.split(',').map((menuSet) => {
-      const [name, count] = menuSet.split('-');
+    const orderList = input.split(',').map((menuSet) => {
+      const [menu, count] = menuSet.split('-');
 
-      return { name, count: Number(count) };
+      return { menu: menu.trim(), count: Number(count) };
     });
-
-    return menus;
+    console.log(orderList);
+    return orderList;
   },
 };
 
