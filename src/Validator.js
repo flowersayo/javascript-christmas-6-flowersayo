@@ -1,5 +1,5 @@
 import AppError from './AppError.js';
-import { ERROR, EVENT } from './Constant.js';
+import { ERROR, MENU, EVENT } from './Constant.js';
 import Menu from './domain/Menu.js';
 import inRange from './utils/inRange.js';
 
@@ -21,7 +21,11 @@ const Validator = {
   },
 
   isValidOrder(order) {
-    const { menu } = order;
+    const { menu, count } = order;
+
+    if (count < EVENT.MININUM_SERVE) {
+      return false;
+    }
 
     if (!Menu.has(menu)) {
       return false;
