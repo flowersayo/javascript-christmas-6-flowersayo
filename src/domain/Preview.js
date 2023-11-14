@@ -16,6 +16,7 @@ class Preview {
 
   constructor(date, orderList) {
     Validator.validateDate(date);
+    Validator.validateOrderList(orderList);
 
     this.#date = date;
     this.#orderList = orderList;
