@@ -21,6 +21,14 @@ class Preview {
     this.#date = date;
     this.#orderList = orderList;
   }
+
+  get date() {
+    return this.#date;
+  }
+
+  get orderList() {
+    return this.#orderList;
+  }
 }
 
 export default Preview;
