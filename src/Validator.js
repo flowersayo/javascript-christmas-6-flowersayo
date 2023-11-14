@@ -26,7 +26,9 @@ const Validator = {
     if (count < EVENT.MININUM_SERVE) {
       return false;
     }
-
+    if (count > EVENT.MAXIMUM_SERVE) {
+      return false;
+    }
     if (!Menu.has(menu)) {
       return false;
     }
