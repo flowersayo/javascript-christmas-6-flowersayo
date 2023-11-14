@@ -18,6 +18,7 @@ const Validator = {
     if (
       !this.matchSpecifiedFormat(orderList) ||
       this.isDuplicate(orderList) ||
+      !this.includesMenuExceptDrink(orderList) ||
       !orderList.every(this.isValidOrder)
     ) {
       throw new AppError(ERROR.INVALID_ORDER);
@@ -43,6 +44,13 @@ const Validator = {
   isDuplicate(orderList) {
     const menuNames = orderList.map(({ menu }) => menu);
     return new Set(menuNames).size !== orderList.length;
+  },
+
+  includesMenuExceptDrink(orderList) {
+    return orderList.some(({ menu }) => {
+      const category = Menu.findCategory(menu);
+      return category !== undefined && category !== MENU.CATEGORIES.DRINK;
+    });
   },
 
   matchSpecifiedFormat(orderList) {
