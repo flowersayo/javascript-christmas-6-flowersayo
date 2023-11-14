@@ -2,6 +2,8 @@ export const EVENT = {
   MONTH: 12,
   DAY_MIN: 1,
   DAY_MAX: 31,
+  MAXIMUM_SERVE: 20,
+  MININUM_SERVE: 1,
 };
 
 export const MENU = {
@@ -81,4 +83,5 @@ export const ERROR = {
   INVALID_DATE: '유효하지 않은 날짜입니다. 다시 입력해 주세요.',
   DATE_NOT_A_NUMBER: '날짜는 0 ~ 9 사이 숫자로 이루어져야 합니다.',
   DATE_NOT_IN_RANGE: `날짜는 ${EVENT.DAY_MIN}일 ~ ${EVENT.DAY_MAX} 사이여야 합니다.`,
+  INVALID_ORDER: '유효하지 않은 주문입니다. 다시 입력해 주세요.',
 };
