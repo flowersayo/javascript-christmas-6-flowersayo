@@ -16,10 +16,16 @@ class EventPreviewController {
   async handleEventResult() {
     OutputView.printPreviewTitle(EVENT.MONTH, this.#preview.date);
     this.handlePrintMenu();
+    this.handlePrintTotalAmountBeforeDiscount();
   }
 
   async handlePrintMenu() {
     OutputView.printMenu(this.#preview.orderList);
+  }
+
+  async handlePrintTotalAmountBeforeDiscount() {
+    const totalAmount = this.#preview.getTotalAmountBeforeDiscount();
+    OutputView.printAmountBeforeDiscount(totalAmount);
   }
 }
 

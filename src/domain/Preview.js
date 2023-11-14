@@ -1,4 +1,5 @@
 import Validator from '../Validator.js';
+import Menu from './Menu.js';
 
 class Preview {
   #date;
@@ -28,6 +29,17 @@ class Preview {
 
   get orderList() {
     return this.#orderList;
+  }
+
+  getTotalAmountBeforeDiscount() {
+    const INITAL_SUM = 0;
+    const totalAmount = this.#orderList.reduce((acc, { menu, count }) => {
+      const menuItem = Menu.find(menu);
+
+      return acc + menuItem.price * count;
+    }, INITAL_SUM);
+
+    return totalAmount;
   }
 }
 
