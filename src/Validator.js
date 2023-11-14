@@ -15,7 +15,7 @@ const Validator = {
   },
 
   validateOrderList(orderList) {
-    if (!orderList.every(this.isValidOrder)) {
+    if (this.isDuplicate(orderList) || !orderList.every(this.isValidOrder)) {
       throw new AppError(ERROR.INVALID_ORDER);
     }
   },
@@ -34,6 +34,11 @@ const Validator = {
     }
 
     return true;
+  },
+
+  isDuplicate(orderList) {
+    const menuNames = orderList.map(({ menu }) => menu);
+    return new Set(menuNames).size !== orderList.length;
   },
 };
 
