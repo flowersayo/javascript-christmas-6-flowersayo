@@ -1,5 +1,6 @@
 import AppError from './AppError.js';
 import { ERROR, EVENT } from './Constant.js';
+import Menu from './domain/Menu.js';
 import inRange from './utils/inRange.js';
 
 const Validator = {
@@ -11,6 +12,22 @@ const Validator = {
     ) {
       throw new AppError(ERROR.INVALID_DATE);
     }
+  },
+
+  validateOrderList(orderList) {
+    if (!orderList.every(this.isValidOrder)) {
+      throw new AppError(ERROR.INVALID_ORDER);
+    }
+  },
+
+  isValidOrder(order) {
+    const { menu } = order;
+
+    if (!Menu.has(menu)) {
+      return false;
+    }
+
+    return true;
   },
 };
 
