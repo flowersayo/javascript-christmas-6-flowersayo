@@ -4,6 +4,72 @@ export const EVENT = {
   DAY_MAX: 31,
 };
 
+export const MENU = {
+  CATEGORIES: {
+    EPETIZER: '애피타이저',
+    MAIN: '메인',
+    DESSERT: '디저트',
+    DRINK: '음료',
+  },
+
+  EPETIZER: [
+    {
+      name: '양송이수프',
+      price: 6_000,
+    },
+    {
+      name: '타파스',
+      price: 5_500,
+    },
+    {
+      name: '시저샐러드',
+      price: 8_000,
+    },
+  ],
+  MAIN: [
+    {
+      name: '티본스테이크',
+      price: 55_000,
+    },
+    {
+      name: '바비큐립',
+      price: 54_000,
+    },
+    {
+      name: '해산물파스타',
+      price: 35_000,
+    },
+    {
+      name: '크리스마스파스타',
+      price: 25_000,
+    },
+  ],
+  DESSERT: [
+    {
+      name: '초코케이크',
+      price: 15_000,
+    },
+    {
+      name: '아이스크림',
+      price: 5_000,
+    },
+  ],
+  DRINK: [
+    {
+      name: '제로콜라',
+      price: 3_000,
+    },
+    {
+      name: '레드와인',
+      price: 60_000,
+    },
+    {
+      name: '샴페인',
+      price: 25_000,
+    },
+  ],
+};
+
 export const MESSAGE = {
   GET_DATE: '12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)',
   GET_MENU_TO_ORDER:
