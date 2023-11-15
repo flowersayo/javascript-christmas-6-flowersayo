@@ -5,6 +5,8 @@ class Event {
 
   #endDate;
 
+  static #EVENT_THRESHOLD_AMOUNT = 10_000;
+
   /**
    * 이벤트 생성
    * @constructor
@@ -16,6 +18,25 @@ class Event {
     this.#name = name;
     this.#startDate = startDate;
     this.#endDate = endDate;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  get startDate() {
+    return this.#startDate;
+  }
+
+  canApply(order) {
+    return (
+      this.#isEventActive(order.date) &&
+      order.calcTotalAmountBeforeDiscount() >= Event.#EVENT_THRESHOLD_AMOUNT
+    );
+  }
+
+  #isEventActive(date) {
+    return this.#startDate <= date && date <= this.#endDate;
   }
 }
 
