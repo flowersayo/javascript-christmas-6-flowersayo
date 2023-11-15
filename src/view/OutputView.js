@@ -37,6 +37,19 @@ const OutputView = {
     const { gift, count } = giftInfo;
     Console.print(`${gift.name} ${count}개`);
   },
+
+  printEventResult(eventResult) {
+    Console.print('\n<혜택 내역>');
+
+    if (eventResult.length === 0) {
+      Console.print('없음');
+      return;
+    }
+
+    eventResult.forEach(({ event, benefit }) => {
+      Console.print(`${event.name}: -${benefit.toLocaleString()}원`);
+    });
+  },
   // ...
 };
 

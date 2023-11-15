@@ -8,6 +8,9 @@ export const EVENT = {
   GIFT_MENU: '샴페인',
   GIFT_AMOUNT: 1,
   MIN_AMOUNT_FOR_GIFT_EVENT: 120_000,
+  EVENT_START_DATE: '2023-12-01',
+  EVENT_END_DATE: '2023-12-31',
+  CHRISTMAS_DATE: '2023-12-25',
 };
 
 export const MESSAGE = {

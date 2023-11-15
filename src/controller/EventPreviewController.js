@@ -18,6 +18,7 @@ class EventPreviewController {
     this.handlePrintMenu();
     this.handlePrintTotalAmountBeforeDiscount();
     this.handlePrintGiftMenu();
+    this.handlePrintEventResult();
   }
 
   async handlePrintMenu() {
@@ -32,6 +33,11 @@ class EventPreviewController {
   async handlePrintGiftMenu() {
     const giftInfo = EventManager.applyGiftEvent(this.#order);
     OutputView.printGiftMenu(giftInfo);
+  }
+
+  async handlePrintEventResult() {
+    const eventBenefits = EventManager.getEventBenefits(this.#order);
+    OutputView.printEventResult(eventBenefits);
   }
 }
 
