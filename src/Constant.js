@@ -5,6 +5,9 @@ export const EVENT = {
   DAY_MAX: 31,
   MAXIMUM_SERVE: 20,
   MININUM_SERVE: 1,
+  GIFT_MENU: '샴페인',
+  GIFT_AMOUNT: 1,
+  MIN_AMOUNT_FOR_GIFT_EVENT: 120_000,
 };
 
 export const MESSAGE = {

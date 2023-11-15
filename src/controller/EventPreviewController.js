@@ -1,3 +1,4 @@
+import EventManager from '../domain/event/EventManager.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../domain/Order.js';
@@ -16,6 +17,7 @@ class EventPreviewController {
     OutputView.printPreviewTitle(this.#order.date);
     this.handlePrintMenu();
     this.handlePrintTotalAmountBeforeDiscount();
+    this.handlePrintGiftMenu();
   }
 
   async handlePrintMenu() {
@@ -25,6 +27,11 @@ class EventPreviewController {
   async handlePrintTotalAmountBeforeDiscount() {
     const totalAmount = this.#order.calcTotalAmountBeforeDiscount();
     OutputView.printAmountBeforeDiscount(totalAmount);
+  }
+
+  async handlePrintGiftMenu() {
+    const giftInfo = EventManager.applyGiftEvent(this.#order);
+    OutputView.printGiftMenu(giftInfo);
   }
 }
 

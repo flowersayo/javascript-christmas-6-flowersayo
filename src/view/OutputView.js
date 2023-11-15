@@ -26,9 +26,16 @@ const OutputView = {
     Console.print(`${totalAmount.toLocaleString()}원`);
   },
 
-  printGiftMenu({ gift, count }) {
+  printGiftMenu(giftInfo) {
     Console.print('\n<증정 메뉴>');
-    Console.print(`${gift.name} ${count}`);
+
+    if (giftInfo == null) {
+      Console.print('없음');
+      return;
+    }
+
+    const { gift, count } = giftInfo;
+    Console.print(`${gift.name} ${count}개`);
   },
   // ...
 };
