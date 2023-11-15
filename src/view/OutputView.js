@@ -50,6 +50,14 @@ const OutputView = {
       Console.print(`${event.name}: -${benefit.toLocaleString()}원`);
     });
   },
+  printBenefitAmount(amount) {
+    Console.print('\n<총 혜택 금액');
+    Console.print(`-${amount.toLocaleString()}원`);
+  },
+  printAmountToPay(amount) {
+    Console.print('\n<할인 후 예상 결제 금액>');
+    Console.print(amount);
+  },
   // ...
 };
 

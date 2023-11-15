@@ -39,6 +39,11 @@ class EventPreviewController {
     const eventBenefits = EventManager.getEventBenefits(this.#order);
     OutputView.printEventResult(eventBenefits);
   }
+
+  async handlePrintBeneiftAmount() {
+    const amount = EventManager.getBenefitAmount(this.#order);
+    OutputView.printBenefitAmount(amount);
+  }
 }
 
 export default EventPreviewController;
