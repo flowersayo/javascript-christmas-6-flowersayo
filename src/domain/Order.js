@@ -1,9 +1,9 @@
-import Validator from '../Validator.js';
 import Menu from './Menu.js';
+import Validator from '../Validator.js';
+import { EVENT } from '../Constant.js';
 
-class Preview {
+class Order {
   #date;
-
   /**
    * @typedef {Object} OrderItem
    * @property {string} name - 메뉴의 이름
@@ -16,11 +16,11 @@ class Preview {
   #orderList;
 
   constructor(date, orderList) {
-    Validator.validateDate(date);
     Validator.validateOrderList(orderList);
+    Validator.validateDate(date);
 
-    this.#date = date;
     this.#orderList = orderList;
+    this.#date = new Date(`${EVENT.YEAR}-${EVENT.MONTH}-${date}`);
   }
 
   get date() {
@@ -31,7 +31,7 @@ class Preview {
     return this.#orderList;
   }
 
-  getTotalAmountBeforeDiscount() {
+  calcTotalAmountBeforeDiscount() {
     const INITAL_SUM = 0;
     const totalAmount = this.#orderList.reduce((acc, { menu, count }) => {
       const menuItem = Menu.find(menu);
@@ -43,4 +43,4 @@ class Preview {
   }
 }
 
-export default Preview;
+export default Order;

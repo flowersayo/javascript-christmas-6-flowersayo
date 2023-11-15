@@ -28,6 +28,12 @@ class Menu {
     return menuNames.includes(searchName);
   }
 
+  static find(menuName) {
+    const menuItems = Object.values(Menu.#MENU).flat();
+
+    return menuItems.find(({ name }) => name === menuName);
+  }
+
   static findCategory(menuName) {
     const menuItems = Object.values(Menu.#MENU).flat();
 

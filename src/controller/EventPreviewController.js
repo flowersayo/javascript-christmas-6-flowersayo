@@ -1,30 +1,29 @@
-import { EVENT } from '../Constant.js';
-import Preview from '../domain/Preview.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
+import Order from '../domain/Order.js';
 
 class EventPreviewController {
-  #preview;
+  #order;
 
   async handleTakeOrder() {
     const date = await InputView.readDate();
     const orderList = await InputView.readOrder();
 
-    this.#preview = new Preview(date, orderList);
+    this.#order = new Order(date, orderList);
   }
 
   async handleEventResult() {
-    OutputView.printPreviewTitle(EVENT.MONTH, this.#preview.date);
+    OutputView.printPreviewTitle(this.#order.date);
     this.handlePrintMenu();
     this.handlePrintTotalAmountBeforeDiscount();
   }
 
   async handlePrintMenu() {
-    OutputView.printMenu(this.#preview.orderList);
+    OutputView.printMenu(this.#order.orderList);
   }
 
   async handlePrintTotalAmountBeforeDiscount() {
-    const totalAmount = this.#preview.getTotalAmountBeforeDiscount();
+    const totalAmount = this.#order.calcTotalAmountBeforeDiscount();
     OutputView.printAmountBeforeDiscount(totalAmount);
   }
 }

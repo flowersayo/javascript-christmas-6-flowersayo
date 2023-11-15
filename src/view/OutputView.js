@@ -1,9 +1,11 @@
 import { Console } from '@woowacourse/mission-utils';
 
 const OutputView = {
-  printPreviewTitle(month, date) {
+  printPreviewTitle(date) {
     Console.print(
-      `${month}월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!`
+      `${
+        date.getMonth() + 1
+      }월 ${date.getDate()}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!`
     );
   },
 
@@ -24,6 +26,10 @@ const OutputView = {
     Console.print(`${totalAmount.toLocaleString()}원`);
   },
 
+  printGiftMenu({ gift, count }) {
+    Console.print('\n<증정 메뉴>');
+    Console.print(`${gift.name} ${count}`);
+  },
   // ...
 };
 
