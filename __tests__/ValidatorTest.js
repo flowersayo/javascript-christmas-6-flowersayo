@@ -45,7 +45,10 @@ describe('사용자 입력값 유효성 검사 테스트', () => {
   });
 
   test('최대 주문 수량을 초과할 경우 예외가 발생한다.', () => {
-    const orderList = [{ menu: '타파스', count: EVENT.MAXIMUM_SERVE + 1 }];
+    const orderList = [
+      { menu: '타파스', count: EVENT.MAXIMUM_SERVE },
+      { menu: '바비큐립', count: EVENT.MAXIMUM_SERVE },
+    ];
 
     expect(() => {
       Validator.validateOrderList(orderList);

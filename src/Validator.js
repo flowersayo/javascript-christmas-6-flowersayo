@@ -19,6 +19,7 @@ const Validator = {
       !this.matchSpecifiedFormat(orderList) ||
       this.isDuplicate(orderList) ||
       !this.includesMenuExceptDrink(orderList) ||
+      !this.isValidOrderQuantity(orderList) ||
       !orderList.every(this.isValidOrder)
     ) {
       throw new AppError(ERROR.INVALID_ORDER);
@@ -31,9 +32,7 @@ const Validator = {
     if (count < EVENT.MININUM_SERVE) {
       return false;
     }
-    if (count > EVENT.MAXIMUM_SERVE) {
-      return false;
-    }
+
     if (!Menu.has(menu)) {
       return false;
     }
@@ -44,6 +43,24 @@ const Validator = {
   isDuplicate(orderList) {
     const menuNames = orderList.map(({ menu }) => menu);
     return new Set(menuNames).size !== orderList.length;
+  },
+
+  getTotalQuantity(orderList) {
+    const INITAL_COUNT = 0;
+    const totalQuantity = orderList.reduce((acc, { count }) => {
+      return acc + count;
+    }, INITAL_COUNT);
+
+    return totalQuantity;
+  },
+
+  isValidOrderQuantity(orderList) {
+    const totalQuantity = this.getTotalQuantity(orderList);
+
+    return (
+      EVENT.MININUM_SERVE <= totalQuantity &&
+      totalQuantity <= EVENT.MAXIMUM_SERVE
+    );
   },
 
   includesMenuExceptDrink(orderList) {
