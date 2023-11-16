@@ -2,12 +2,14 @@ import EventManager from '../domain/event/EventManager.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../domain/Order.js';
+import Calculator from '../domain/Calculator.js';
 
 class EventPreviewController {
   #order;
 
   async handleTakeOrder() {
     const date = await InputView.readDate();
+
     const orderList = await InputView.readOrder();
 
     this.#order = new Order(date, orderList);
@@ -17,8 +19,9 @@ class EventPreviewController {
     OutputView.printPreviewTitle(this.#order.date);
     this.handlePrintMenu();
     this.handlePrintTotalAmountBeforeDiscount();
-    this.handlePrintGiftMenu();
+    this.handlePrintGiftResult();
     this.handlePrintEventResult();
+    this.handlePrintBeneiftAmount();
   }
 
   async handlePrintMenu() {
@@ -30,19 +33,24 @@ class EventPreviewController {
     OutputView.printAmountBeforeDiscount(totalAmount);
   }
 
-  async handlePrintGiftMenu() {
-    const giftInfo = EventManager.applyGiftEvent(this.#order);
-    OutputView.printGiftMenu(giftInfo);
+  async handlePrintGiftResult() {
+    const giftEventResults = EventManager.applyTypeEvents(
+      this.#order,
+      EventManager.EVENT_TYPE.GiftEvent
+    );
+
+    OutputView.printGiftMenu(giftEventResults);
   }
 
   async handlePrintEventResult() {
-    const eventBenefits = EventManager.getEventBenefits(this.#order);
-    OutputView.printEventResult(eventBenefits);
+    const eventResult = EventManager.applyAllEvents(this.#order);
+    OutputView.printEventBenefitResult(eventResult);
   }
 
   async handlePrintBeneiftAmount() {
-    const amount = EventManager.getBenefitAmount(this.#order);
-    OutputView.printBenefitAmount(amount);
+    const eventResult = EventManager.applyAllEvents(this.#order);
+    const benefitAmount = Calculator.getBenefitAmount(eventResult);
+    OutputView.printBenefitAmount(benefitAmount);
   }
 }
 
