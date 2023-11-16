@@ -20,7 +20,8 @@ class Order {
     Validator.validateDate(date);
 
     this.#orderList = orderList;
-    this.#date = new Date(`${EVENT.YEAR}-${EVENT.MONTH}-${date}`);
+
+    this.#date = new Date(EVENT.YEAR, EVENT.MONTH - 1, date);
   }
 
   get date() {
