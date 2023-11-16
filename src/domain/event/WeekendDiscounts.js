@@ -4,26 +4,26 @@ import { MENU } from '../../Constant.js';
 import Event from './Event.js';
 
 class WeekendDiscount extends Event {
-  #discountPerDish = 2_023;
-
   #canApply(order) {
     return super.canApply(order) && isWeekend(order.date);
   }
 
   #getDiscount({ orderList }) {
+    const DISCOUNT_PER_DISH = 2_023;
     const categoryCount = Menu.countCategory(orderList);
     const dessertMenuCount = categoryCount[MENU.CATEGORIES.DESSERT];
-    console.log(categoryCount);
 
     if (dessertMenuCount === 0) {
       return null;
     }
-    return dessertMenuCount * this.#discountPerDish;
+    return dessertMenuCount * DISCOUNT_PER_DISH;
   }
 
   apply(order) {
-    if (this.canApply(order)) {
-      return this.#getDiscount(order);
+    if (this.#canApply(order)) {
+      return {
+        discount: this.#getDiscount(order),
+      };
     }
 
     return null;
