@@ -47,8 +47,7 @@ class EventPreviewController {
   }
 
   async handlePrintBeneiftAmount() {
-    const eventResult = EventManager.applyAllEvents(this.#order);
-    const benefitAmount = Calculator.getBenefitAmount(eventResult);
+    const benefitAmount = this.#order.calcBenefitAmount();
     OutputView.printBenefitAmount(benefitAmount);
   }
 }
