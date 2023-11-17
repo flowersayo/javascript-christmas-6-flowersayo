@@ -2,7 +2,6 @@ import EventManager from '../domain/event/EventManager.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../domain/Order.js';
-import Calculator from '../domain/Calculator.js';
 
 class EventPreviewController {
   #order;
@@ -29,7 +28,7 @@ class EventPreviewController {
   }
 
   async handlePrintTotalAmountBeforeDiscount() {
-    const totalAmount = this.#order.calcTotalAmountBeforeDiscount();
+    const totalAmount = this.#order.calcOriginalAmount();
     OutputView.printAmountBeforeDiscount(totalAmount);
   }
 

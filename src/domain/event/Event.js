@@ -31,7 +31,7 @@ class Event {
   canApply(order) {
     return (
       this.#isEventActive(order.date) &&
-      order.calcTotalAmountBeforeDiscount() >= Event.#EVENT_THRESHOLD_AMOUNT
+      order.calcOriginalAmount() >= Event.#EVENT_THRESHOLD_AMOUNT
     );
   }
 

@@ -6,7 +6,7 @@ class GiftEvent extends Event {
   #gift = Menu.find(EVENT.GIFT_MENU);
 
   #canApply(order) {
-    const totalAmountBeforeDiscount = order.calcTotalAmountBeforeDiscount();
+    const totalAmountBeforeDiscount = order.calcOriginalAmount();
     return (
       super.canApply(order) &&
       totalAmountBeforeDiscount >= EVENT.MIN_AMOUNT_FOR_GIFT_EVENT

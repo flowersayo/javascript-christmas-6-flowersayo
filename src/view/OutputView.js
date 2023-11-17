@@ -62,7 +62,7 @@ const OutputView = {
   },
   printBenefitAmount(amount) {
     Console.print('\n<총 혜택 금액');
-    Console.print(`-${amount.toLocaleString()}원`);
+    Console.print(`${amount === 0 ? '' : '-'}${amount.toLocaleString()}원`);
   },
 
   // ...
