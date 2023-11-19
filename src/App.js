@@ -11,7 +11,6 @@ class App {
     await this.#handleError(async () => {
       await this.eventPreviewController.handleTakeOrder();
     });
-
     await this.eventPreviewController.handleEventResult();
   }
 
@@ -21,7 +20,7 @@ class App {
     } catch (error) {
       OutputView.printError(error.message);
       if (error.type === ERROR.INPUT_ERROR) {
-        this.#handleError(action);
+        await this.#handleError(action);
       }
     }
   }

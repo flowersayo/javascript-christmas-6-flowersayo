@@ -9,9 +9,7 @@ class EventPreviewController {
 
   async handleTakeOrder() {
     const date = await InputView.readDate();
-
     const orderList = await InputView.readOrder();
-
     this.#order = new Order(date, orderList);
   }
 
