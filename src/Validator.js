@@ -10,7 +10,7 @@ const Validator = {
       !REGEX_NUMERIC.test(date) ||
       !inRange(date, EVENT.DAY_MIN, EVENT.DAY_MAX)
     ) {
-      throw new AppError(ERROR.INVALID_DATE);
+      throw new AppError(ERROR.INPUT_ERROR, ERROR.INVALID_DATE);
     }
   },
 
@@ -22,7 +22,7 @@ const Validator = {
       !this.isValidOrderQuantity(orderList) ||
       !orderList.every(this.isValidOrder)
     ) {
-      throw new AppError(ERROR.INVALID_ORDER);
+      throw new AppError(ERROR.INPUT_ERROR, ERROR.INVALID_ORDER);
     }
   },
 

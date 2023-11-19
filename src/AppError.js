@@ -1,8 +1,9 @@
 import { ERROR } from './Constant.js';
 
 class AppError extends Error {
-  constructor(message) {
+  constructor(type, message) {
     super(`${ERROR.PREFIX} ${message}`);
+    this.type = type;
   }
 }
 
