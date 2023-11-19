@@ -33,7 +33,7 @@ const Validator = {
       return false;
     }
 
-    if (!Menu.has(menu)) {
+    if (!Menu.find(menu)) {
       return false;
     }
 
@@ -65,7 +65,7 @@ const Validator = {
 
   includesMenuExceptDrink(orderList) {
     return orderList.some(({ menu }) => {
-      const category = Menu.findCategory(menu);
+      const { category } = Menu.find(menu);
       return category !== undefined && category !== MENU.CATEGORIES.DRINK;
     });
   },
