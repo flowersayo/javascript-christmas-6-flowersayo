@@ -2,6 +2,7 @@ import EventManager from '../domain/event/EventManager.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../domain/Order.js';
+import BadgeManager from '../domain/BadgeManager.js';
 
 class EventPreviewController {
   #order;
@@ -21,6 +22,7 @@ class EventPreviewController {
     this.handlePrintGiftResult();
     this.handlePrintEventResult();
     this.handlePrintBeneiftAmount();
+    this.handlePrintFinalAmount();
   }
 
   async handlePrintMenu() {
@@ -49,6 +51,11 @@ class EventPreviewController {
   async handlePrintBeneiftAmount() {
     const benefitAmount = this.#order.calcBenefitAmount();
     OutputView.printBenefitAmount(benefitAmount);
+  }
+
+  async handlePrintFinalAmount() {
+    const finalAmount = this.#order.calcFinalAmount();
+    OutputView.printFinalAmount(finalAmount);
   }
 }
 

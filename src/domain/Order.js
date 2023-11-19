@@ -60,6 +60,24 @@ class Order {
 
     return benefitAmount;
   }
+
+  calcDiscountedAmount() {
+    const eventResult = EventManager.applyTypeEvents(
+      this,
+      EventManager.EVENT_TYPE.DiscountEvent
+    );
+
+    const discountedAmount = eventResult.reduce(
+      (acc, { result }) => acc + result.discount,
+      0
+    );
+
+    return discountedAmount;
+  }
+
+  calcFinalAmount() {
+    return this.calcOriginalAmount() - this.calcDiscountedAmount();
+  }
 }
 
 export default Order;

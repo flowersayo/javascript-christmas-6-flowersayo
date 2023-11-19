@@ -60,9 +60,15 @@ const OutputView = {
       }
     });
   },
+
   printBenefitAmount(amount) {
-    Console.print('\n<총 혜택 금액');
+    Console.print('\n<총혜택 금액>');
     Console.print(`${amount === 0 ? '' : '-'}${amount.toLocaleString()}원`);
+  },
+
+  printFinalAmount(amount) {
+    Console.print('\n<할인 후 예상 결제 금액>');
+    Console.print(`${amount.toLocaleString()}원`);
   },
 
   // ...
