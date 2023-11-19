@@ -71,6 +71,17 @@ const OutputView = {
     Console.print(`${amount.toLocaleString()}원`);
   },
 
+  printEventBadge(date, badge) {
+    Console.print('\n<12월 이벤트 배지>');
+
+    if (badge === undefined) {
+      Console.print('없음');
+      return;
+    }
+
+    Console.print(badge.name);
+  },
+
   // ...
 };
 

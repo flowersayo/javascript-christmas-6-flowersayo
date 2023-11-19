@@ -23,6 +23,7 @@ class EventPreviewController {
     this.handlePrintEventResult();
     this.handlePrintBeneiftAmount();
     this.handlePrintFinalAmount();
+    this.handlePrintEventBadge();
   }
 
   async handlePrintMenu() {
@@ -56,6 +57,11 @@ class EventPreviewController {
   async handlePrintFinalAmount() {
     const finalAmount = this.#order.calcFinalAmount();
     OutputView.printFinalAmount(finalAmount);
+  }
+
+  async handlePrintEventBadge() {
+    const receivedBadge = BadgeManager.assign(this.#order);
+    OutputView.printEventBadge(this.#order.date, receivedBadge);
   }
 }
 
