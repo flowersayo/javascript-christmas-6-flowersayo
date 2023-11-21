@@ -65,7 +65,7 @@ const Validator = {
 
   includesMenuExceptDrink(orderList) {
     return orderList.some(({ menu }) => {
-      const { category } = Menu.find(menu);
+      const category = Menu.find(menu)?.category;
       return category !== undefined && category !== MENU.CATEGORIES.DRINK;
     });
   },

@@ -29,7 +29,7 @@ class Menu {
   static countCategory(orderList) {
     const result = Object.values(MENU.CATEGORIES).reduce((acc, category) => {
       const totalCount = orderList.reduce((total, { menu, count }) => {
-        if (this.find(menu).category === category) {
+        if (this.find(menu)?.category === category) {
           return total + count;
         }
         return total;
