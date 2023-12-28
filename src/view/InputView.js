@@ -16,7 +16,7 @@ const InputView = {
 
       return { menu: menu.trim(), count: Number(count) };
     });
-    console.log(orderList);
+
     return orderList;
   },
 };

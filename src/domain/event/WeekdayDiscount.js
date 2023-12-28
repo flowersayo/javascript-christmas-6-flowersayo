@@ -4,15 +4,13 @@ import { MENU } from '../../Constant.js';
 import Event from './Event.js';
 
 class WeekdayDiscount extends Event {
-  #discountPerDish = 2_023;
-
   #canApply(order) {
     return super.canApply(order) && !isWeekend(order.date);
   }
 
   #getDiscount({ orderList }) {
+    const DISCOUNT_PER_DISH = 2_023;
     const categoryCount = Menu.countCategory(orderList);
-    console.log(categoryCount);
 
     const mainMenuCount = categoryCount[MENU.CATEGORIES.MAIN];
 
@@ -20,12 +18,14 @@ class WeekdayDiscount extends Event {
       return null;
     }
 
-    return mainMenuCount * this.#discountPerDish;
+    return mainMenuCount * DISCOUNT_PER_DISH;
   }
 
   apply(order) {
     if (this.#canApply(order)) {
-      return this.#getDiscount(order);
+      return {
+        discount: this.#getDiscount(order),
+      };
     }
 
     return null;

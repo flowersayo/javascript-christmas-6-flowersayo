@@ -17,7 +17,9 @@ class SpecialDiscount extends Event {
 
   apply(order) {
     if (this.#canApply(order)) {
-      return this.#getDiscount(order);
+      return {
+        discount: this.#getDiscount(order),
+      };
     }
 
     return null;

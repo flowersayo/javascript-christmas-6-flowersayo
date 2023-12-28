@@ -2,6 +2,7 @@ import EventManager from '../domain/event/EventManager.js';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../domain/Order.js';
+import BadgeManager from '../domain/BadgeManager.js';
 
 class EventPreviewController {
   #order;
@@ -9,7 +10,6 @@ class EventPreviewController {
   async handleTakeOrder() {
     const date = await InputView.readDate();
     const orderList = await InputView.readOrder();
-
     this.#order = new Order(date, orderList);
   }
 
@@ -17,8 +17,11 @@ class EventPreviewController {
     OutputView.printPreviewTitle(this.#order.date);
     this.handlePrintMenu();
     this.handlePrintTotalAmountBeforeDiscount();
-    this.handlePrintGiftMenu();
+    this.handlePrintGiftResult();
     this.handlePrintEventResult();
+    this.handlePrintBeneiftAmount();
+    this.handlePrintFinalAmount();
+    this.handlePrintEventBadge();
   }
 
   async handlePrintMenu() {
@@ -26,23 +29,37 @@ class EventPreviewController {
   }
 
   async handlePrintTotalAmountBeforeDiscount() {
-    const totalAmount = this.#order.calcTotalAmountBeforeDiscount();
+    const totalAmount = this.#order.calcOriginalAmount();
     OutputView.printAmountBeforeDiscount(totalAmount);
   }
 
-  async handlePrintGiftMenu() {
-    const giftInfo = EventManager.applyGiftEvent(this.#order);
-    OutputView.printGiftMenu(giftInfo);
+  async handlePrintGiftResult() {
+    const giftEventResults = EventManager.applyTypeEvents(
+      this.#order,
+      EventManager.EVENT_TYPE.GiftEvent
+    );
+
+    OutputView.printGiftMenu(giftEventResults);
   }
 
   async handlePrintEventResult() {
-    const eventBenefits = EventManager.getEventBenefits(this.#order);
-    OutputView.printEventResult(eventBenefits);
+    const eventResult = EventManager.applyAllEvents(this.#order);
+    OutputView.printEventBenefitResult(eventResult);
   }
 
   async handlePrintBeneiftAmount() {
-    const amount = EventManager.getBenefitAmount(this.#order);
-    OutputView.printBenefitAmount(amount);
+    const benefitAmount = this.#order.calcBenefitAmount();
+    OutputView.printBenefitAmount(benefitAmount);
+  }
+
+  async handlePrintFinalAmount() {
+    const finalAmount = this.#order.calcFinalAmount();
+    OutputView.printFinalAmount(finalAmount);
+  }
+
+  async handlePrintEventBadge() {
+    const receivedBadge = BadgeManager.assign(this.#order);
+    OutputView.printEventBadge(this.#order.date, receivedBadge);
   }
 }
 

@@ -1,4 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
+import GiftEvent from '../domain/event/GiftEvent.js';
+import Menu from '../domain/Menu.js';
 
 const OutputView = {
   printPreviewTitle(date) {
@@ -26,38 +28,60 @@ const OutputView = {
     Console.print(`${totalAmount.toLocaleString()}원`);
   },
 
-  printGiftMenu(giftInfo) {
+  printGiftMenu(giftEventResults) {
     Console.print('\n<증정 메뉴>');
 
-    if (giftInfo == null) {
+    if (giftEventResults.length === 0) {
       Console.print('없음');
       return;
     }
 
-    const { gift, count } = giftInfo;
-    Console.print(`${gift.name} ${count}개`);
+    giftEventResults.forEach(({ event, result }) => {
+      const { gift, count } = result;
+      Console.print(`${gift.name} ${count}개`);
+    });
   },
 
-  printEventResult(eventResult) {
+  printEventBenefitResult(eventResult) {
     Console.print('\n<혜택 내역>');
-
     if (eventResult.length === 0) {
       Console.print('없음');
       return;
     }
-
-    eventResult.forEach(({ event, benefit }) => {
-      Console.print(`${event.name}: -${benefit.toLocaleString()}원`);
+    eventResult.forEach(({ event, result }) => {
+      if (event instanceof GiftEvent) {
+        Console.print(
+          `${event.name}: -${(
+            Menu.find(result.gift.name).price * result.count
+          ).toLocaleString()}원`
+        );
+      } else {
+        Console.print(`${event.name}: -${result.discount.toLocaleString()}원`);
+      }
     });
   },
+
   printBenefitAmount(amount) {
-    Console.print('\n<총 혜택 금액');
-    Console.print(`-${amount.toLocaleString()}원`);
+    Console.print('\n<총혜택 금액>');
+    Console.print(`${amount === 0 ? '' : '-'}${amount.toLocaleString()}원`);
   },
-  printAmountToPay(amount) {
+
+  printFinalAmount(amount) {
     Console.print('\n<할인 후 예상 결제 금액>');
-    Console.print(amount);
+    Console.print(`${amount.toLocaleString()}원`);
   },
+
+  printEventBadge(date, badge) {
+    Console.print('\n<12월 이벤트 배지>');
+
+    if (badge === undefined) {
+      Console.print('없음');
+      return;
+    }
+
+    Console.print(badge.name);
+  },
+
   // ...
 };
 

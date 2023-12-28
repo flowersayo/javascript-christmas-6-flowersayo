@@ -8,6 +8,11 @@ import Menu from '../Menu.js';
 import SpecialDiscount from './SpecialDiscount.js';
 
 class EventManager {
+  static EVENT_TYPE = {
+    GiftEvent: 'GiftEvent',
+    DiscountEvent: 'DiscountEvent',
+  };
+
   static EVENT_CATEGORIS = {
     GIFT_EVENT: '증정 이벤트',
     CHRISTMAS_DAY_DISCOUNT: '크리스마스 디데이 할인',
@@ -17,11 +22,13 @@ class EventManager {
   };
 
   static EVENT = {
-    GiftEvent: new GiftEvent(
-      EventManager.EVENT_CATEGORIS.GIFT_EVENT,
-      new Date(EVENT.EVENT_START_DATE),
-      new Date(EVENT.EVENT_END_DATE)
-    ),
+    GiftEvent: [
+      new GiftEvent(
+        EventManager.EVENT_CATEGORIS.GIFT_EVENT,
+        new Date(EVENT.EVENT_START_DATE),
+        new Date(EVENT.EVENT_END_DATE)
+      ),
+    ],
     DiscountEvent: [
       new D_DayDiscount(
         EventManager.EVENT_CATEGORIS.CHRISTMAS_DAY_DISCOUNT,
@@ -46,62 +53,44 @@ class EventManager {
     ],
   };
 
-  static applyGiftEvent(order) {
-    return EventManager.EVENT.GiftEvent.apply(order);
-  }
+  static applyTypeEvents(order, eventType) {
+    const events = Object.values(EventManager.EVENT[eventType]);
 
-  static getTotalDiscountAmount(order) {
-    const discountEvents = Object.values(EventManager.EVENT.DiscountEvent);
+    const eventResult = events.reduce((acc, event) => {
+      const result = event.apply(order);
 
-    const totalDiscountAmount = discountEvents.reduce((acc, discountEvent) => {
-      const discountAmount = discountEvent.apply(order);
-      if (discountAmount === null) {
-        // 할인을 적용받지 못한 경우
-        return acc;
+      if (result !== null) {
+        acc.push({
+          event,
+          result,
+        });
       }
 
-      return acc + discountAmount;
-    }, 0);
-    return totalDiscountAmount;
+      return acc;
+    }, []);
+
+    return eventResult;
   }
 
-  static getBenefitAmount(order) {
-    const eventBenefits = this.getEventBenefits(order);
-
-    const benefitAmount = eventBenefits.reduce(
-      (acc, { benefit }) => acc + benefit,
-      0
-    );
-
-    return benefitAmount;
-  }
-
-  static getEventBenefits(order) {
+  static applyAllEvents(order) {
     const events = [
       Object.values(EventManager.EVENT.DiscountEvent),
       EventManager.EVENT.GiftEvent,
     ].flat();
 
-    const eventBenefitResult = events.reduce((acc, event) => {
+    const eventResult = events.reduce((acc, event) => {
       const result = event.apply(order);
 
       if (result !== null) {
-        if (event instanceof GiftEvent) {
-          acc.push({
-            event,
-            benefit: Menu.find(result.gift.name).price * result.count,
-          });
-        } else {
-          acc.push({
-            event,
-            benefit: result,
-          });
-        }
+        acc.push({
+          event,
+          result,
+        });
       }
 
       return acc;
     }, []);
-    return eventBenefitResult;
+    return eventResult;
   }
 }
 

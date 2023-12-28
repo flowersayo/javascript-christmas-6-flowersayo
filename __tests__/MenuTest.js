@@ -22,13 +22,13 @@ describe('메뉴판 도메인 로직 테스트', () => {
     ].flat();
 
     possibleMenuNames.forEach((name) => {
-      expect(Menu.has(name)).toBeTruthy();
+      expect(Menu.find(name)).toBeDefined();
     });
 
     const impossibleMenuNames = ['짜장면', '', '스프라이트'];
 
     impossibleMenuNames.forEach((name) => {
-      expect(Menu.has(name)).toBeFalsy();
+      expect(Menu.find(name)).toBeUndefined();
     });
   });
 
@@ -39,6 +39,6 @@ describe('메뉴판 도메인 로직 테스트', () => {
     ['양송이수프', MENU.CATEGORIES.EPETIZER],
     ['짜장면', undefined],
   ])('특정 메뉴의 카테고리를 찾을 수 있다.', ({ menu, category }) => {
-    expect(Menu.findCategory(menu)).toBe(category);
+    expect(Menu.find(menu)?.category).toBe(category);
   });
 });

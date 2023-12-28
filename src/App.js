@@ -1,4 +1,6 @@
 import EventPreviewController from './controller/EventPreviewController.js';
+import OutputView from './view/OutputView.js';
+import { ERROR } from './Constant.js';
 
 class App {
   constructor() {
@@ -6,16 +8,20 @@ class App {
   }
 
   async run() {
-    this.#handleInputError(async () => {
+    await this.#handleError(async () => {
       await this.eventPreviewController.handleTakeOrder();
     });
+    await this.eventPreviewController.handleEventResult();
   }
 
-  async #handleInputError(action) {
+  async #handleError(action) {
     try {
       await action();
-    } catch (e) {
-      this.#handleInputError(action);
+    } catch (error) {
+      OutputView.printError(error.message);
+      if (error.type === ERROR.INPUT_ERROR) {
+        await this.#handleError(action);
+      }
     }
   }
 }

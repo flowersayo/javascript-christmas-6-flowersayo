@@ -1,6 +1,8 @@
 import Menu from './Menu.js';
 import Validator from '../Validator.js';
 import { EVENT } from '../Constant.js';
+import EventManager from './event/EventManager.js';
+import GiftEvent from './event/GiftEvent.js';
 
 class Order {
   #date;
@@ -20,7 +22,8 @@ class Order {
     Validator.validateDate(date);
 
     this.#orderList = orderList;
-    this.#date = new Date(`${EVENT.YEAR}-${EVENT.MONTH}-${date}`);
+
+    this.#date = new Date(EVENT.YEAR, EVENT.MONTH - 1, date);
   }
 
   get date() {
@@ -31,7 +34,7 @@ class Order {
     return this.#orderList;
   }
 
-  calcTotalAmountBeforeDiscount() {
+  calcOriginalAmount() {
     const INITAL_SUM = 0;
     const totalAmount = this.#orderList.reduce((acc, { menu, count }) => {
       const menuItem = Menu.find(menu);
@@ -40,6 +43,40 @@ class Order {
     }, INITAL_SUM);
 
     return totalAmount;
+  }
+
+  calcBenefitAmount() {
+    const eventResult = EventManager.applyAllEvents(this);
+    const benefitAmount = eventResult.reduce((acc, { event, result }) => {
+      let benefit;
+      if (event instanceof GiftEvent) {
+        benefit = Menu.find(result.gift.name).price * result.count;
+      } else {
+        benefit = result.discount;
+      }
+
+      return acc + benefit;
+    }, 0);
+
+    return benefitAmount;
+  }
+
+  calcDiscountedAmount() {
+    const eventResult = EventManager.applyTypeEvents(
+      this,
+      EventManager.EVENT_TYPE.DiscountEvent
+    );
+
+    const discountedAmount = eventResult.reduce(
+      (acc, { result }) => acc + result.discount,
+      0
+    );
+
+    return discountedAmount;
+  }
+
+  calcFinalAmount() {
+    return this.calcOriginalAmount() - this.calcDiscountedAmount();
   }
 }
 

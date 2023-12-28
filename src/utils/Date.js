@@ -7,7 +7,8 @@ const getDateDiff = (date1, date2) => {
 
 const isWeekend = (date) => {
   const day = date.getDay();
-  return day === 0 || day === 6; // 0은 일요일, 6은 토요일
+
+  return day === 5 || day === 6; // 주말 기준 : 금요일, 토요일
 };
 
 export { getDateDiff, isWeekend };
